@@ -117,6 +117,11 @@
         default: true,
       },
 
+      folderParams: {
+        type: Boolean,
+        default: false
+      },
+
       // Custom Params
       customParams: Object,
 
@@ -331,11 +336,15 @@
 
       composeParams(val) {
         const encode = (val) => this.encodeParams ? encodeURIComponent(val) : val
-        let params = `${this.param}=${encode(val)}`
-        if(this.customParams) {
-          Object.keys(this.customParams).forEach((key) => {
-            params += `&${key}=${encode(this.customParams[key])}`
-          })
+        if(this.folderParams) {
+          return `${this.param}/${encode(val)}`
+        }else{
+          let params = `${this.param}=${encode(val)}`
+          if(this.customParams) {
+            Object.keys(this.customParams).forEach((key) => {
+              params += `&${key}=${encode(this.customParams[key])}`
+            })
+          }
         }
         return params
       },
