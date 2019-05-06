@@ -362,9 +362,15 @@
         this.onBeforeAjax ? this.onBeforeAjax(val) : null
         // Compose Params
         let params = this.composeParams(val)
+        
         // Init Ajax
         let ajax = new XMLHttpRequest();
-        ajax.open('GET', `${this.url}?${params}`, true);
+        
+        let paramDelimiter = (this.folderParams ? '/' : '?')
+        
+        let composedUrl = `${this.url}${paramDelimiter}${params}`
+
+        ajax.open('GET', composedUrl, true);
         this.composeHeader(ajax)
         // Callback Event
         ajax.addEventListener('progress', (data) => {

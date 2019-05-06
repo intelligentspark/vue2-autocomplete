@@ -459,9 +459,15 @@ return /******/ (function(modules) { // webpackBootstrap
       this.onBeforeAjax ? this.onBeforeAjax(val) : null;
       // Compose Params
       var params = this.composeParams(val);
+
       // Init Ajax
       var ajax = new XMLHttpRequest();
-      ajax.open('GET', this.url + "?" + params, true);
+
+      var paramDelimiter = this.folderParams ? '/' : '?';
+
+      var composedUrl = "" + this.url + paramDelimiter + params;
+
+      ajax.open('GET', composedUrl, true);
       this.composeHeader(ajax);
       // Callback Event
       ajax.addEventListener('progress', function (data) {
